@@ -87,7 +87,7 @@ export default function Topic() {
                                     typeof country.name.nativeName === 'object' &&
                                     Object.values(country.name.nativeName)[0] &&
                                     typeof Object.values(country.name.nativeName)[0] === 'object' &&
-                                    Object.values(country.name.nativeName)[0].common
+                                    Object.values(country.name.nativeName)[0]?.common
                                 }
                             </p>
 
@@ -105,7 +105,7 @@ export default function Topic() {
                                     typeof country.currencies === 'object' &&
                                     Object.values(country.currencies)[0] &&
                                     typeof Object.values(country.currencies)[0] === 'object' &&
-                                    Object.values(country.currencies)[0].name
+                                    Object.values(country.currencies)[0]?.name
                                 }</p>
                                 <p className="font-light text-slate-400">
                                     <span className={"font-normal " + (isDarkMode ? 'text-white' : 'text-black')}>
