@@ -7,24 +7,35 @@ import Link from 'next/link';
 import { IoMdArrowBack } from "react-icons/io";
 import Image from 'next/image';
 interface Country {
-    name: {
-      nativeName: { [key: string]: { official: string; common: string } };
-      // Other properties...
-    };
-    // Other properties...
-  }
-  
+  name: {
+    official: string;
+    common: string;
+    nativeName: { [key: string]: { official: string; common: string } };
+  };
+  flags: {
+    svg: string;
+  };
+  population: number;
+  region: string;
+  subregion: string;
+  capital: string;
+  tld: string[];
+  currencies: { [key: string]: { name: string } };
+  languages: { [key: string]: string };
+  borders: string[];
+  // Other properties...
+}
+
 export default function Topic() {
-  const [country, setCountry] = useState<any>(null);
+  const [country, setCountry] = useState<Country | null>(null);
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-  const getTerm = () => {
+
+  const getTerm = (): string => {
     const urlSegments = window.location.pathname.split('/');
     return decodeURI(urlSegments[urlSegments.length - 1]);
   };
 
   useEffect(() => {
-    const isDark = isdark();
-    setIsDarkMode(isDark);
     const fetchData = async () => {
       const term = getTerm();
       try {
@@ -32,20 +43,20 @@ export default function Topic() {
         const response: AxiosResponse<any> = await axios.get(url);
         const data: any = response.data;
         if (data && data.length > 0) {
-          // Assuming data is an array, handle it accordingly.
           setCountry(data[0]); // Assuming you want the first country from the response
         } else {
           setCountry(null); // Reset country state if no data is found
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         setCountry(null); // Reset country state in case of an error
       }
     };
 
+    const isDark = isdark();
+    setIsDarkMode(isDark);
     fetchData();
   }, []);
-
   return (
     <main>
         <Nav isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode}></Nav>
